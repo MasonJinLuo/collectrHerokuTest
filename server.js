@@ -47,7 +47,8 @@ app.engine("handlebars", exphbs({
 app.set("view engine", "handlebars");
 
 // Static directory
-app.use(express.static("./public"));
+app.use("/public", express.static(process.cwd() + '/public'));
+
 
 // Routes =============================================================
 
