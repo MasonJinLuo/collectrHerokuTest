@@ -58,8 +58,8 @@ require("./routes/user-post-routes.js")(app);
 require("./routes/groups-routes.js")(app);
 require("./routes/login-signup-api-routes.js")(app);
 
-collectrdb.sequelize.sync().then(function() {
+// collectrdb.sequelize.sync().then(function() {
     app.listen(PORT, function() {
         console.log("App listening on PORT " + PORT);
     });
-});
+// });
