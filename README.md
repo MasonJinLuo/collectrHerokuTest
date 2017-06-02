@@ -1,1 +1,1 @@
-# collectrHerokuTest
+# Collectr

@@ -1,0 +1,51 @@
+<div id="wrapper">
+    {{> nav }}
+    {{> menu-btn }}
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+          {{> hero }}
+
+            <!-- Main page content -->
+            <!-- Group Users Div -->
+            <div class="row group-users">
+             {{#each user}}
+              <a href="#">
+                <div class="user-div">
+                  <img src={{this.image_path}} />
+                </div>
+                <div class="user-name-div">
+                  <span class="user-name">{{this.email}}</span>
+                </div>
+              </a>
+               {{/each}}
+            </div>
+            <!-- Group Users Div -->
+
+            <!-- Category wrapped galleries -->
+              <div class="row category-gallery-wrapper category-wrapper-with-wrap animated fadeInUp">
+                    <div class="gallery-img-div category-div">
+                     {{#each post}}
+                      <div class="item-img-div">
+                        <a href="#" class="collect-btn-link">
+                          <div class="collectr-btn">
+                            <img src="../../public/assets/images/collectr-logo.svg" />
+                            <span class="collectr-save">save</span>
+                            <span>{{this.description}}</span>
+                          </div>
+                        </a>
+                        <a href="#">
+                          <img src={{this.img_path}} />
+                        </a>
+                      </div>
+                      {{/each}}
+                    </div>
+                </div>
+
+            <!-- Main page content -->
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
