@@ -45,6 +45,7 @@ app.engine("handlebars", exphbs({
     partialsDir: path.join(__dirname, '/views/layouts/partials')
 }));
 app.set("view engine", "handlebars");
+app.set('views', path.join(__dirname, '/views'));
 
 // Static directory
 app.use(express.static("./public"));
@@ -57,8 +58,8 @@ require("./routes/user-post-routes.js")(app);
 require("./routes/groups-routes.js")(app);
 require("./routes/login-signup-api-routes.js")(app);
 
-collectrdb.sequelize.sync().then(function() {
+// collectrdb.sequelize.sync().then(function() {
     app.listen(PORT, function() {
         console.log("App listening on PORT " + PORT);
     });
-});
+// });
