@@ -48,7 +48,7 @@ app.set("view engine", "handlebars");
 app.set('views', path.join(__dirname, '/views'));
 
 // Static directory
-app.use(express.static("./public"));
+app.use(express.static(process.cwd() + "/public"));
 
 // Routes =============================================================
 
@@ -58,8 +58,8 @@ require("./routes/user-post-routes.js")(app);
 require("./routes/groups-routes.js")(app);
 require("./routes/login-signup-api-routes.js")(app);
 
-// collectrdb.sequelize.sync().then(function() {
+db.sequelize.sync({ force: false }).then(function() {
     app.listen(PORT, function() {
-        console.log("App listening on PORT " + PORT);
+        console.log(`Server running http://localhost:${PORT}, Ctrl + c to stop`);
     });
-// });
+});
