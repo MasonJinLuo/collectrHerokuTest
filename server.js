@@ -58,7 +58,7 @@ require("./routes/user-post-routes.js")(app);
 require("./routes/groups-routes.js")(app);
 require("./routes/login-signup-api-routes.js")(app);
 
-db.sequelize.sync({ force: false }).then(function() {
+collectrdb.sequelize.sync({ force: false }).then(function() {
     app.listen(PORT, function() {
         console.log(`Server running http://localhost:${PORT}, Ctrl + c to stop`);
     });
