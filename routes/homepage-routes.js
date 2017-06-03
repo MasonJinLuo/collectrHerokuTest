@@ -24,9 +24,7 @@ module.exports = function(app) {
             }]
         }).then(function(response) {
 
-            //Future Goal: Sort by popularity and render most popular first
             res.render('index', { category: response });
-            // res.json(response);
 
         });
     });
@@ -47,11 +45,14 @@ module.exports = function(app) {
                     model: db.Category
                 }, {
                     model: db.User,
-                    where: { id: userID }
+                    where: { id: userID },
+                    include: [{
+                        model: db.Users2Categories,
+                        include: db.Category
+                    }]
                 }]
             }]
         }).then(function(response) {
-
             if (response.length > 0) {
 
                 res.render('dashboard', { category: response });
@@ -59,10 +60,17 @@ module.exports = function(app) {
             } else {
 
                 db.User.findOne({
-                    where: { id: userID }
+                    where: { id: userID },
+                    include: [{
+                        model: db.Users2Categories,
+                        include: [{
+                            model: db.Category
+                        }]
+                    }]
                 }).then(function(response) {
-                    console.log(response);
+
                     res.render('welcome', { user: response });
+
                 });
 
             }
@@ -252,11 +260,21 @@ module.exports = function(app) {
         });
     });
 
+    app.post('/secure/user/interests/:interest', function(req, res) {
+        db.Users2Categories.create({
+            category_id: req.params.interest,
+            user_id: req.session.user.id
+        }).then(function(response) {
+            res.json(response);
+        })
+
+    });
+
 
     //search through for a specific word
 
 
-     app.get('/search/:searchTerm', function(req, res){
+    app.get('/search/:searchTerm', function(req, res) {
         db.Tags.findAll({
             include: [{
                 model: db.Post2Tags,
@@ -269,13 +287,13 @@ module.exports = function(app) {
                         model: db.Category
                     }, {
                         model: db.User
-                }]
+                    }]
                 }]
             }],
             where: { name: req.params.searchTerm }
-        }).then(function(response){
+        }).then(function(response) {
             // console.log(response)
-            res.render('searchDisplay', { tags: response});
+            res.render('searchDisplay', { tags: response });
             // res.json(response[0].Post2Tags[0].Post);
             // res.json(response);
         })

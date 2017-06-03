@@ -1,4 +1,8 @@
-//Stacy
+/*
+    @author: anupsawant
+    @desc: routes for groups feature
+    @date: 2nd june 2017
+*/
 
 var db = require('../models');
 
@@ -20,7 +24,6 @@ function getUserById(userID){
 			}
 		}).then(function(dbUser) {
             userSet.add(dbUser);
-            console.log("UserSet",userSet.size);
 		});
 }
 
@@ -54,15 +57,13 @@ function getAllPostsInCategory(categories,callback) {
         }).then(function(response) {
             for(var i=0; i < response.length; i++){
                 postSet.add(response[i]);
+                if(userids.has(response[i].owner_id) === false){
+                    userSet.add(response[i].User)
+                }
                 userids.add(response[i].owner_id);
             }
-        }).done(function(){
-            for (let userid of userids){
-                if(useridsDone.has(userid) === false){
-                    getUserById(userid);
-                    useridsDone.add(userid);
-                }
-            }
+        }).done(
+        function(){
             callback();
         });
 }
@@ -72,10 +73,12 @@ module.exports = function(app) {
     app.get('/groups/:groupName', function(req, res) {
         var categories = groups.get(req.params.groupName);
         getAllPostsInCategory(categories,function callback() {
-            console.log('UserSet',userSet.size);
-            console.log('PostSet',postSet.size);
             res.render('groups', { user: Array.from(userSet), post: Array.from(postSet) });
         });
+        postSet.clear();
+        userSet.clear();
+//        useridsDone.clear();
+        userids.clear();
     });
     
     app.get('/groups', function(req, res) {

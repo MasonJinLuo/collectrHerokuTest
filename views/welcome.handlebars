@@ -14,17 +14,18 @@
                   </div>
 
                   <div class="user-header-div">
-                    <h1>Hey, I'm {{this.email}}</h1>
+                    <h1>Welcome To Collectr {{this.email}}!</h1>
                     <h4>Collectr since 2017</h4>
                     <div class="user-dashboard-interests-list">
                       <p>
                         Interested in:
                       </p>
                       <ul>
-                        <a href="#"><li>{{this.interests}}</li></a>
-                        <a href="#"><li>Hats</li></a>
-                        <a href="#"><li>Jewelry</li></a>
-                        <a href="#"><li>Stamps</li></a>
+                        {{#each Users2Categories}}
+                          {{#with Category}}
+                           <a href="/category/{{this.id}}"><li>{{this.name}}</li></a>
+                          {{/with}}
+                        {{/each}}
                       </ul>
                     </div>
                     <div class="about-me-div">
@@ -33,11 +34,29 @@
                     </div>
                   </div>
                 </div>
-          {{/with}}
+          
             <!-- User Dashboard Info-->
 
             <!--Test Button For Adding New Posts. Can be deleted later-->
+            <h4>Start Collecting</h4>
             <button class='glyphicon glyphicon-plus' id='newPostBtn' data-target="#newPostModal" data-toggle="modal" style="padding: 10px;"> Post</button>
+
+            <!-- Horizontal galleries -->
+            <br>
+            <h4>Explore Your Interests</h4>
+            {{#each Users2Categories}}
+              {{#with Category}}
+              <div class="explore-interests" style="margin: 20px;">
+                <a href='/category/{{this.id}}'>
+                  <div class="category-tab" id={{this.id}}>
+                    <h4>{{this.name}}</h4>
+                  </div>
+                </a>
+              </div>
+                {{/with}}
+              {{/each}}
+
+            {{/with}}
 
             <!-- Main page content -->
         </div>
@@ -45,3 +64,9 @@
     <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
+
+{{!-- Begin New Post Modal --}}
+
+  {{> new-post }}
+
+{{!-- End New Post Modal --}}

@@ -5,6 +5,7 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
+          {{> small-hero }}
           {{#with category.0.Posts.0.User}}
                 <!-- Main page content -->
                 <!-- User Dashboard Info-->
@@ -21,10 +22,11 @@
                         Interested in:
                       </p>
                       <ul>
-                        <a href="#"><li>{{this.interests}}</li></a>
-                        <a href="#"><li>Hats</li></a>
-                        <a href="#"><li>Jewelry</li></a>
-                        <a href="#"><li>Stamps</li></a>
+                        {{#each Users2Categories}}
+                          {{#with Category}}
+                          <a href="{{this.id}}"><li>{{this.name}}</li></a>
+                          {{/with}}
+                        {{/each}}
                       </ul>
                     </div>
                     <div class="about-me-div">
